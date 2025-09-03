@@ -1,0 +1,1 @@
+{"version":3,"file":"aggregateController.js","sourceRoot":"","sources":["../../src/controllers/aggregateController.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,YAAY,EAAE,MAAM,qBAAqB,CAAC;AACnD,OAAO,EAAC,MAAM,EAAC,MAAM,UAAU,CAAA;AAC/B,OAAO,EAAE,aAAa,EAAE,MAAM,8BAA8B,CAAC;AAE7D,MAAM,OAAO,mBAAmB;IACpB,aAAa,GAAG,IAAI,aAAa,EAAE,CAAC;CAI/C"}

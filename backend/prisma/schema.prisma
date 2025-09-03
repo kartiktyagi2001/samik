@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+  // output = "./node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// API group model
+model ApiGroup {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  isActive    Boolean     @default(true)
+
+  apiSources  ApiSource[]
+  requests    Request[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  DELETE
+}
+
+model ApiSource {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  method      HttpMethod   @default(GET)
+  headers     Json?
+  queryParams Json?
+  timeout     Int      @default(30000)
+  isActive    Boolean  @default(true)
+
+  groupId     String
+  apiGroup    ApiGroup @relation(fields: [groupId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Request {
+  id        String   @id @default(cuid())
+  endpoint  String
+  method    String
+  params    Json?
+  response  Json
+  metadata  Json
+
+  createdAt DateTime @default(now())
+  groupId   String
+  apiGroup  ApiGroup @relation(fields: [groupId], references: [id])
+}
