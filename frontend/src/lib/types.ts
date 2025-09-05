@@ -1,55 +1,3 @@
-// // Matches your Prisma models and API responses
-// export interface ApiGroup {
-//   id: string;
-//   name: string;
-//   description?: string;
-//   apiSources: ApiSource[];
-//   _count: {
-//     apiSources: number;
-//     requests: number;
-//   };
-// }
-
-// export interface ApiSource {
-//   id: string;
-//   name: string;
-//   url: string;
-//   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-//   headers?: Record<string, string>;
-//   queryParams?: Record<string, string>;
-//   timeout: number;
-//   isActive: boolean;
-//   groupId: string;
-// }
-
-// export interface AggregatedResponse {
-//   success: boolean;
-//   data: any[];
-//   metadata: {
-//     totalAPIs: number;
-//     successfulAPIs: number;
-//     failedAPIs: number;
-//     responseTime: number;
-//     timestamp: string;
-//     groupName: string;
-//     sources: ApiResponseMeta[];
-//   };
-// }
-
-// export interface ApiResponseMeta {
-//   apiId: string;
-//   name: string;
-//   url: string;
-//   method: string;
-//   success: boolean;
-//   status?: number;
-//   responseTime?: number;
-//   error?: string;
-// }
-
-
-// lib/types.ts - TypeScript type definitions matching your backend
-
 export interface ApiGroup {
   id: string;
   name: string;
@@ -147,7 +95,7 @@ export interface Request {
   groupId: string;
 }
 
-// UI component props
+//UI component props
 export interface GroupCardProps {
   group: ApiGroup;
   onDelete?: (id: string) => void;
@@ -169,7 +117,7 @@ export interface MetadataDisplayProps {
   metadata: AggregatedResponse['metadata'];
 }
 
-// API response wrappers
+//API response wrappers
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;

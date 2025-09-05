@@ -1,5 +1,3 @@
-// components/layout/navbar.tsx - Main navigation component
-
 'use client';
 
 import Link from 'next/link';

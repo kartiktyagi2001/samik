@@ -1,12 +1,14 @@
-// app/groups/page.tsx
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { groupsApi } from '@/lib/api';
-import { ApiGroup } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Copy } from 'lucide-react';
+// import { Progress } from '@/components/ui/progress';
+import {toast} from 'sonner';
+import { Copy, ThumbsUp, Zap, LoaderCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
+//tem type for  info to be displayed
 interface GroupInfo {
   id: string;
   name: string;
@@ -16,6 +18,9 @@ interface GroupInfo {
 }
 
 export default function GroupsPage() {
+
+  const router = useRouter();
+
   const [groups, setGroups] = useState<GroupInfo[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,23 +34,33 @@ export default function GroupsPage() {
             description: g.description,
             apiCount: g._count.apiSources,
             backendUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/aggregate/${encodeURIComponent(g.name)}`
-          }))
+          }))   //backend url for each group
         );
       }
       setLoading(false);
     });
   }, []);
 
+  //handlers
   const handleCopy = (url: string) => {
     navigator.clipboard.writeText(url);
+    toast('Copied to clipboard!' , { icon: <ThumbsUp /> });
+  };
+
+  const handleEdit = (groupId: string) => {
+    router.push(`/groups/${groupId}`);
   };
 
   if (loading) {
-    return <p className="text-center py-8">Loading groups…</p>;
+    return <p className="flex text-center py-8 min-h-[75vh] items-center justify-center">Loading <span>  </span> <LoaderCircle width={18} height={18} /></p>;
   }
 
+  //test logs
+  console.log(groups);
+  console.log(process.env.NEXT_PUBLIC_API_URL);
+
   if (groups.length === 0) {
-    return <p className="text-center py-8">No groups available.</p>;
+    return <p className="text-center py-8 min-h-[75vh]">No groups available.</p>;
   }
 
   return (
@@ -60,6 +75,7 @@ export default function GroupsPage() {
                 <p className="mt-2 text-sm text-gray-700">{group.description}</p>
               )}
             </div>
+
             <div className="mt-4">
               <p className="text-sm text-black">
                 APIs: <span className="font-medium">{group.apiCount}</span>
@@ -71,12 +87,22 @@ export default function GroupsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-black text-black hover:bg-black hover:text-white"
+                  className="border-black text-black hover:bg-black hover:text-white hover:cursor-pointer"
                   onClick={() => handleCopy(group.backendUrl)}
                 >
                   <Copy className="w-4 h-4" />
                 </Button>
               </div>
+            </div>
+
+            <div className='mt-4 flex justify-between'>
+                <Button variant="outline" size="sm" className="border-black bg-white text-black hover:bg-black hover:text-white hover:cursor-pointer" onClick={() => handleEdit(group.id)}>
+                    Edit
+                </Button>
+
+                <Button variant="outline" size="sm" className="border-black bg-black text-white hover:bg-white hover:text-black hover:cursor-pointer">
+                   <Zap className="w-4 h-4" /> Run
+                </Button>
             </div>
           </div>
         ))}
@@ -84,3 +110,4 @@ export default function GroupsPage() {
     </div>
   );
 }
+
