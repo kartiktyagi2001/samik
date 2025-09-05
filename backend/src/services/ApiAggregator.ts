@@ -15,7 +15,7 @@ export class ApiAggregator {
     
     // Only call active APIs
     const activeApis = apiSources.filter(api => api.isActive);
-    console.log(`Active APIs: ${activeApis.length}/${apiSources.length}`);
+    console.log(`Active APIs: ${activeApis.length}/${apiSources.length}`);  //it is possible that user give all wrong apis endpoints
     
     if (activeApis.length === 0) {
       throw new Error('No active APIs found in this group');
@@ -32,12 +32,14 @@ export class ApiAggregator {
     results.forEach((result, index) => {
       const api = activeApis[index];
       
+      //only consider successful responses
       if (api && result.status === 'fulfilled') {
         successfulResponses.push({
           apiName: api.name,
           data: result.value.data
         });
         
+        //log metadat
         apiMetadata.push({
           apiName: api.name,
           success: true,
@@ -130,7 +132,7 @@ export class ApiAggregator {
     }
   }
 
-  //test individual api before adding to group
+  //test individual api  at -> /api/aggregate/test
   async testApi(apiRequest: ApiTestRequest): Promise<ApiTestResult> {
     const startTime = Date.now();
     

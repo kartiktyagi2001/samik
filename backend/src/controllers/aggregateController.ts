@@ -7,7 +7,7 @@ import type { Prisma } from "@prisma/client";
 export class AggregateController {
   private apiAggregator = new ApiAggregator();
 
-  /** GET /api/aggregate */
+  //GET /api/aggregate
   async listGroups(req: Request, res: Response): Promise<void> {
     try {
       const groups = await prisma.apiGroup.findMany({
@@ -37,7 +37,7 @@ export class AggregateController {
     }
   }
 
-  /** GET /api/aggregate/:groupName */
+  // /api/aggregate/:groupName
   async aggregateGroup(req: Request, res: Response): Promise<void> {
     try {
       const groupName = req.params.groupName;
@@ -65,6 +65,7 @@ export class AggregateController {
         return;
       }
 
+      //finally we call aggregator service to aggregate data from multiple apis
       const result = await this.apiAggregator.aggregateApiGroup(
         group.apiSources,
         groupName
@@ -102,7 +103,7 @@ export class AggregateController {
     }
   }
 
-  /** POST /api/aggregate/test */
+  //POST /api/aggregate/test
   async testApi(req: Request, res: Response): Promise<void> {
     try {
       const result = await this.apiAggregator.testApi(req.body);

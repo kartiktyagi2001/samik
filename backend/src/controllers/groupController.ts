@@ -5,7 +5,7 @@ import { ApiAggregator } from '../services/ApiAggregator.js';
 export class GroupController {
   private apiAggregator = new ApiAggregator();
 
-  /** GET /api/groups */
+  //GET-> /api/groups to get all groups
   async getAllGroups(req: Request, res: Response) {
     try {
       const groups = await prisma.apiGroup.findMany({
@@ -21,7 +21,7 @@ export class GroupController {
     }
   }
 
-  /** POST /api/groups */
+  //POST-> /api/groups to create a new group
   async createGroup(req: Request, res: Response) {
     try {
       const { name, description } = req.body;
@@ -35,7 +35,7 @@ export class GroupController {
     }
   }
 
-  /** GET /api/groups/:id */
+  // GET-> /api/groups/:id to get group by its id
   async getGroupById(req: Request, res: Response) {
     try {
       const id = String(req.params.id);
@@ -54,16 +54,24 @@ export class GroupController {
     }
   }
 
-  /** POST /api/groups/:id/apis */
+  //POST-> /api/groups/:id/apis to add a new API to a group
   async addApiToGroup(req: Request, res: Response) {
     try {
       const groupId = String(req.params.id);
-      const { name, url, method = 'GET', headers, queryParams, timeout = 30000 } = req.body;
+      const { name, url, method = 'GET', headers, queryParams, timeout = 30000 } = req.body;  //api endpoint details
       if (!name || !url) return res.status(400).json({ success: false, error: 'Name & URL required' });
+
+      //multiplem apis in one request
+      // const apis = Array.isArray(req.body) ? req.body : [];
+      // if (apis.length === 0) {
+      //   return res.status(400).json({ success: false, error: 'Request body must be a non-empty array of APIs' });
+      // }
+
+      
       const group = await prisma.apiGroup.findUnique({ where: { id: groupId } });
       if (!group) return res.status(404).json({ success: false, error: 'Group not found' });
 
-      // Test the API
+      //test the API
       const testResult = await this.apiAggregator.testApi({ name, url, method, headers, queryParams, timeout });
       if (!testResult.success) {
         return res.status(400).json({ success: false, error: 'Test failed', details: testResult.error });
