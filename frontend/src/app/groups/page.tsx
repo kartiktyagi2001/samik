@@ -56,9 +56,9 @@ export default function GroupsPage() {
     router.push(`/groups/${groupId}`);
   };
 
-  const handleRun = ()=>{
+  // const handleRun = ()=>{
 
-  }
+  // }
 
   //new group creation handler
   const handleCreateNew = async ()=>{
