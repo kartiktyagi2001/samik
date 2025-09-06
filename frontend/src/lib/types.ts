@@ -124,8 +124,10 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
-export interface GroupListResponse extends ApiResponse<ApiGroup[]> {}
-export interface GroupDetailResponse extends ApiResponse<ApiGroup> {}
+// export interface GroupListResponse extends ApiResponse<ApiGroup[]> {}
+// export interface GroupDetailResponse extends ApiResponse<ApiGroup> {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AggregationListResponse extends ApiResponse<{
   name: string;
   description?: string;

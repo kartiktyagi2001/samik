@@ -8,8 +8,6 @@ import {
   ApiTestResult,
   CreateGroupRequest,
   AddApiRequest,
-  GroupListResponse,
-  GroupDetailResponse,
   AggregationListResponse,
   ApiResponse
 } from './types';
@@ -44,7 +42,7 @@ async function handleApiResponse<T>(response: Response): Promise<ApiResponse<T>>
 // Groups API - /api/groups
 export const groupsApi = {
   // GET /api/groups - Get all groups
-  getAll: async (): Promise<GroupListResponse> => {
+  getAll: async (): Promise<ApiResponse<ApiGroup[]>> => {
     try {
       const response = await fetch(`${API_BASE}/api/groups`);
       return await handleApiResponse<ApiGroup[]>(response);
@@ -57,7 +55,7 @@ export const groupsApi = {
   },
 
   // GET /api/groups/:id - Get group by ID with details
-  getById: async (id: string): Promise<GroupDetailResponse> => {
+  getById: async (id: string): Promise<ApiResponse<ApiGroup>> => {
     try {
       const response = await fetch(`${API_BASE}/api/groups/${id}`);
       return await handleApiResponse<ApiGroup>(response);
@@ -70,7 +68,7 @@ export const groupsApi = {
   },
 
   // POST /api/groups - Create new group
-  create: async (data: CreateGroupRequest): Promise<GroupDetailResponse> => {
+  create: async (data: CreateGroupRequest): Promise<ApiResponse<ApiGroup>> => {
     try {
       const response = await fetch(`${API_BASE}/api/groups`, {
         method: 'POST',
