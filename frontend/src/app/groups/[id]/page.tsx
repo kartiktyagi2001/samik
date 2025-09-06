@@ -147,7 +147,7 @@ export default function GroupDetailsPage() {
         </div>
       </div>
 
-      {/* Group Info Cards */}
+      {/* group cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="border border-black p-4 rounded">
           <h3 className="font-medium text-sm text-gray-600">APIs</h3>
@@ -163,9 +163,9 @@ export default function GroupDetailsPage() {
         </div>
       </div>
 
-      {/* Aggregate Endpoint */}
+      {/* group aggr endpoint */}
       <div className="border border-black p-4 rounded">
-        <h3 className="font-medium mb-2">Aggregate Endpoint</h3>
+        <h3 className="font-medium mb-2">Group Endpoint <span className='text-xs text-center'>(copy to use)</span></h3>
         <div className="flex items-center gap-2">
           <code className="bg-gray-100 px-3 py-2 rounded flex-1 text-sm">
             {aggregateUrl}
@@ -244,7 +244,7 @@ export default function GroupDetailsPage() {
               <div key={api.id} className="border border-black p-4 rounded">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <h4 className="font-medium">{api.name}</h4>
+                    <span className="font-medium">{api.name}</span>
                     <p className="text-sm text-gray-600 mt-1">{api.method}</p>
                     <code className="text-xs bg-gray-100 px-2 py-1 rounded mt-2 inline-block">
                       {api.url}
