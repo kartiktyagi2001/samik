@@ -146,7 +146,7 @@ export function isValidUrl(url: string): boolean {
 /**
  * Parse JSON safely
  */
-export function safeJsonParse(jsonString: string): any {
+export function safeJsonParse(jsonString: string): unknown {
   try {
     return JSON.parse(jsonString);
   } catch {
@@ -157,7 +157,7 @@ export function safeJsonParse(jsonString: string): any {
 /**
  * Stringify JSON safely with formatting
  */
-export function safeJsonStringify(obj: any, space: number = 2): string {
+export function safeJsonStringify(obj: unknown, space: number = 2): string {
   try {
     return JSON.stringify(obj, null, space);
   } catch {
@@ -168,7 +168,7 @@ export function safeJsonStringify(obj: any, space: number = 2): string {
 /**
  * Debounce function for search inputs
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void {

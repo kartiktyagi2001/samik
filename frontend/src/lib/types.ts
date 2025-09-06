@@ -37,7 +37,7 @@ export interface ApiResponseMeta {
 
 export interface AggregatedResponse {
   success: boolean;
-  data: any[];
+  data: unknown[];
   metadata: {
     totalAPIs: number;
     successfulAPIs: number;
@@ -64,7 +64,7 @@ export interface ApiTestResult {
   dataPreview?: {
     type: 'array' | 'object' | 'string' | 'number';
     length?: number;
-    sample?: any;
+    sample?: unknown;
     fields?: string[];
   };
   error?: string;
@@ -88,9 +88,9 @@ export interface Request {
   id: string;
   method: string;
   endpoint: string;
-  params: any;
-  response: any;
-  metadata: any;
+  params: unknown;
+  response: unknown;
+  metadata: unknown;
   createdAt: string;
   groupId: string;
 }
@@ -108,7 +108,7 @@ export interface ApiListProps {
 }
 
 export interface DataTableProps {
-  data: any[];
+  data: unknown[];
   title?: string;
   isLoading?: boolean;
 }
