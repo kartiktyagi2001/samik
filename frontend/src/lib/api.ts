@@ -205,24 +205,8 @@ export const aggregationApi = {
   }
 };
 
-// Health check
-export const healthApi = {
-  check: async (): Promise<ApiResponse<{ status: string; timestamp: string }>> => {
-    try {
-      const response = await fetch(`${API_BASE}/health`);
-      return await handleApiResponse<{ status: string; timestamp: string }>(response);
-    } catch (error) {
-      return {
-        success: false,
-        error: 'Network error: Unable to check server health'
-      };
-    }
-  }
-};
-
 // Export all APIs as a single object for convenience
 export const api = {
   groups: groupsApi,
-  aggregation: aggregationApi,
-  health: healthApi
+  aggregation: aggregationApi
 };
