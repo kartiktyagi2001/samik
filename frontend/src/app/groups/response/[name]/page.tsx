@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { aggregationApi } from '@/lib/api';
+// import { aggregationApi } from '@/lib/api';
 import { AggregatedResponse } from '@/lib/types';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { copyToClipboard, downloadData } from '@/lib/dataUtils';
+import { Copy, Download, ArrowLeft, ChevronLeft} from 'lucide-react';
+
 
 type DataRow = Record<string, unknown>;
 
@@ -18,7 +21,7 @@ export default function AggregatePage() {
   const [data, setData] = useState<DataRow[]>([]);
   const [metadata, setMetadata] = useState<AggregatedResponse['metadata'] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [runnig, setRunning] = useState(false);
+//   const [runnig, setRunning] = useState(false);
   const [runAgain, setRunAgain] = useState(0);
 
   const API_BASE = process.env.NEXT_PUBLIC_API_URL
@@ -114,7 +117,7 @@ export default function AggregatePage() {
             className="border-black text-black hover:bg-black hover:text-white"
             onClick={() => router.push('/groups')}
             >
-            Back
+            <ChevronLeft />
             </Button>
         
             <Button
@@ -140,33 +143,81 @@ export default function AggregatePage() {
             {!Array.isArray(data) || data.length === 0 ? (
               <p className="text-gray-600">No data returned.</p>
             ) : (
-              <div className="overflow-auto border border-black rounded">
-                <table className="min-w-full divide-y divide-black">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      {headers.map(header => (
-                        <th
-                          key={header}
-                          className="px-4 py-2 text-left text-sm font-medium text-gray-700"
-                        >
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-black">
-                    {data.map((row, idx) => (
-                      <tr key={idx} className="bg-white">
+
+            <div>
+                <div className="overflow-auto border border-black rounded">
+                    <table className="min-w-full divide-y divide-black">
+                    <thead className="bg-gray-100">
+                        <tr>
                         {headers.map(header => (
-                          <td key={header} className="px-4 py-2 text-sm text-gray-800">
-                            {String((row as DataRow)[header] ?? '')}
-                          </td>
+                            <th
+                            key={header}
+                            className="px-4 py-2 text-left text-sm font-medium text-gray-700"
+                            >
+                            {header}
+                            </th>
                         ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-black">
+                        {data.map((row, idx) => (
+                        <tr key={idx} className="bg-white">
+                            {headers.map(header => (
+                            <td key={header} className="px-4 py-2 text-sm text-gray-800">
+                                {String((row as DataRow)[header] ?? '')}
+                            </td>
+                            ))}
+                        </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                </div>
+
+                <div className="flex justify-between gap-2 mt-4">
+
+                    <div className='flex gap-2'>
+                        <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-black text-black hover:bg-black hover:text-white"
+                        onClick={() => copyToClipboard(data, 'json')}
+                        >
+                        <Copy /> JSON
+                        </Button>
+                        
+                        <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-black text-black hover:bg-black hover:text-white"
+                        onClick={() => copyToClipboard(data, 'csv')}
+                        >
+                        <Copy /> CSV
+                        </Button>
+                    </div>
+                    
+                    <div className='flex gap-2'>
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-black text-black hover:bg-black hover:text-white text-sm"
+                        onClick={() => downloadData(data, 'json', groupName)}
+                        >
+                        <Download /> JSON
+                        </Button>
+                        
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-black text-black hover:bg-black hover:text-white"
+                        onClick={() => downloadData(data, 'csv', groupName)}
+                        >
+                        <Download /> CSV
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
+              
             )}
           </section>
 
