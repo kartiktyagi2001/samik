@@ -26,17 +26,22 @@ export function HeroSection() {
         </div>
 
         <div className="flex flex-col gap-2 justify-center">
-          <Link href="/groups">
-            <Button 
-              size="lg"
-              className="bg-black hover:bg-black/90 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
-            >
-              Create Group
-            </Button>
-          </Link>
-          <Link href="/test">
-            <span className='text-black/90 text-sm underline underline-offset-1'>test an API endpoint</span>
-        </Link>
+          <span>
+            <Link href="/groups">
+              <Button 
+                size="lg"
+                className="bg-black hover:bg-black/80 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
+              >
+                Create Group
+              </Button>
+            </Link>
+          </span>
+
+          <span>
+            <Link href="/test">
+              <span className='text-black/90 text-sm underline underline-offset-1'>test an API endpoint</span>
+            </Link>
+        </span>
         </div>
       </div>
     </section>
