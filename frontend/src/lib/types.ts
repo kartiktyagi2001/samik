@@ -121,6 +121,7 @@ export interface MetadataDisplayProps {
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
+  metadata?: Record<string, unknown>
   error?: string;
 }
 

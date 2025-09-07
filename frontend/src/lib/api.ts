@@ -170,7 +170,7 @@ export const aggregationApi = {
     }
   },
 
-  // GET /api/aggregate/:groupName?format=csv - Get aggregated data as CSV
+  // GET /api/aggregate/:groupName?format=csv - Get aggregated data as CSV (idk but i will use client-side conversion so might not require it)
   aggregateGroupCsv: async (groupName: string): Promise<string> => {
     try {
       const response = await fetch(`${API_BASE}/api/aggregate/${groupName}?format=csv`);

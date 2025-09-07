@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { groupsApi } from '@/lib/api';
+import { groupsApi, aggregationApi } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 // import { Progress } from '@/components/ui/progress';
 import {toast} from 'sonner';
@@ -56,9 +56,9 @@ export default function GroupsPage() {
     router.push(`/groups/${groupId}`);
   };
 
-  // const handleRun = ()=>{
-
-  // }
+  const handleRun = (groupName: string)=>{
+    router.push(`/groups/response/${encodeURIComponent(groupName)}`)
+  }
 
   //new group creation handler
   const handleCreateNew = async ()=>{
@@ -202,7 +202,7 @@ export default function GroupsPage() {
                     Edit
                 </Button>
 
-                <Button variant="outline" size="sm" className="border-black bg-black text-white hover:bg-white hover:text-black hover:cursor-pointer">
+                <Button variant="outline" size="sm" className="border-black bg-black text-white hover:bg-white hover:text-black hover:cursor-pointer" onClick={()=>handleRun(group.name)}>
                    <Zap className="w-4 h-4" /> Run
                 </Button>
             </div>

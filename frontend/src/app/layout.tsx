@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         <div className="min-h-screen bg-gray-50">
           <Navbar />
-          <main className="container mx-auto px-4">
+          <main className="container mx-auto px-4 min-h-screen">
             {children}
             <Toaster />
           </main>
