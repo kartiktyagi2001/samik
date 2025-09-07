@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Curl Render Service
-        run: curl -s https://data-forge-50fl.onrender.com/health > /dev/null
+        run: curl -s https://data-forge-50fl.onrender.com/health 
