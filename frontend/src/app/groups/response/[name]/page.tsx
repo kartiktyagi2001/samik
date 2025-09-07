@@ -179,7 +179,7 @@ export default function AggregatePage() {
                         <Button
                         size="sm"
                         variant="outline"
-                        className="border-black text-black hover:bg-black hover:text-white"
+                        className="border-black text-black hover:bg-black hover:text-white hidden sm:flex"
                         onClick={() => copyToClipboard(data, 'json')}
                         >
                         <Copy /> JSON
@@ -191,7 +191,7 @@ export default function AggregatePage() {
                         className="border-black text-black hover:bg-black hover:text-white"
                         onClick={() => copyToClipboard(data, 'csv')}
                         >
-                        <Copy /> CSV
+                        <Copy /> <span className='hidden sm:flex'>CSV</span>
                         </Button>
                     </div>
                     
@@ -199,7 +199,7 @@ export default function AggregatePage() {
                         <Button
                         variant="outline"
                         size="sm"
-                        className="border-black text-black hover:bg-black hover:text-white text-sm"
+                        className="border-black text-black hover:bg-black hover:text-white text-sm hidden sm:flex"
                         onClick={() => downloadData(data, 'json', groupName)}
                         >
                         <Download /> JSON
@@ -211,7 +211,7 @@ export default function AggregatePage() {
                         className="border-black text-black hover:bg-black hover:text-white"
                         onClick={() => downloadData(data, 'csv', groupName)}
                         >
-                        <Download /> CSV
+                        <Download /> <span className='hidden sm:flex'>CSV</span>
                         </Button>
                     </div>
                 </div>
