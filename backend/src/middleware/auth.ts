@@ -14,8 +14,10 @@ export const Auth = async (req: AuthRequest, res: Response, next: NextFunction)=
 
     const header = req.headers.authorization
 
-    if(!header)
-            return res.status(401).json({error: "Please Signin!"})
+    if(!header){
+        console.error("No no, signin first!")
+        return res.status(401).json({error: "Please Signin!"})
+    }
 
     const token: any = header.split(" ")[1]
 
