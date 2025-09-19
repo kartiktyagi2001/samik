@@ -1,5 +1,7 @@
 'use client';
 
+const authUrl = process.env.NEXT_PUBLIC_AUTH_URL;
+
 interface AuthProps {
   user: boolean;
 }
@@ -41,7 +43,7 @@ export function HeroSection({user}: AuthProps) {
               </Button>
             </Link>
             ) : (
-              <Link href="http://localhost:3001/">
+              <Link href={`${authUrl}`}>
                 <Button 
                 size="lg"
                 className="bg-black hover:bg-black/80 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
