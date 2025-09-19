@@ -1,8 +1,8 @@
-name: Keep Render Alive
+name: Keep Server Alive
 
 on:
   schedule:
-    - cron: "*/5 * * * *" # every 5 minutes (UTC)
+    - cron: "*/10 * * * *" # every 10 minutes (UTC)
   workflow_dispatch: # allows manual run
 
 jobs:
