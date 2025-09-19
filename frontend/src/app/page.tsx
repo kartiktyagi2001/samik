@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -5,8 +6,10 @@ import { api } from '@/lib/api';
 import { formatNumber } from '@/lib/utils';
 import { Plus, Database, Zap, FileText } from 'lucide-react';
 import { HeroSection } from '@/components/hero';
+import { useEffect, useState } from 'react';
 
-// Server Component - fetches data at build/request time
+
+//Server Component - fetches data at build/request time, to be moved to other server logic file
 async function getDashboardStats() {
   try {
     const [groupsResponse, aggregationResponse] = await Promise.all([
@@ -27,7 +30,7 @@ async function getDashboardStats() {
       recentGroups: groupsResponse.success ? groupsResponse.data?.slice(0, 3) || [] : []
     };
   } catch (error) {
-    // Handle error gracefully in production
+    //Handle error
     return {
       totalGroups: 0,
       totalApis: 0,
@@ -37,12 +40,22 @@ async function getDashboardStats() {
   }
 }
 
-export default async function HomePage() {
-  const stats = await getDashboardStats();
+export default function HomePage() {
+  // const stats = await getDashboardStats();  //not using rn
+
+  const [user, setUser] = useState(false)
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      setUser(true)
+    }else{
+      setUser(false)
+    }
+  }, [localStorage.getItem('token')])
 
   return (
     <div className='min-h-screen flex flex-col justify-center items-center'>
-      <HeroSection />
+      <HeroSection user={user} />
 
       <div>
 

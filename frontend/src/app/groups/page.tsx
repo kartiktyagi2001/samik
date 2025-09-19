@@ -1,15 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { groupsApi } from '@/lib/api';
 import { Button } from '@/components/ui/button';
-// import { Progress } from '@/components/ui/progress';
-import {toast} from 'sonner';
-import { Copy, ThumbsUp, Zap, LoaderCircle, Plus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import {
+  Copy,
+  ThumbsUp,
+  Zap,
+  LoaderCircle,
+  Plus,
+} from 'lucide-react';
 
-//temp type for  info to be displayed
 interface GroupInfo {
   id: string;
   name: string;
@@ -18,112 +22,195 @@ interface GroupInfo {
   backendUrl: string;
 }
 
-export default function GroupsPage() {
+var authUrl = 'http://localhost:3001';
 
+export default function GroupsPage() {
   const router = useRouter();
 
   const [groups, setGroups] = useState<GroupInfo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showCreateForm, setShowCreateForm] = useState(false)
-  const [groupName, setGroupName] = useState('')
-  const [groupDescription, setGroupDescription] = useState('')
-  const [creating, setCreating] = useState(false)
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [groupName, setGroupName] = useState('');
+  const [groupDescription, setGroupDescription] = useState('');
+  const [creating, setCreating] = useState(false);
+  const [auth, setAuth] = useState<boolean | null>(null);
 
+  //handle token param, then load groups
   useEffect(() => {
-    groupsApi.getAll().then(res => {
+    //extract token from URL if present
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    const urlName = params.get('name');
+
+    if (urlToken) {
+      localStorage.setItem('token', urlToken);
+      localStorage.setItem('tokenSetAt', Date.now().toString());
+      if (urlName) {
+        localStorage.setItem('username', urlName);
+      }
+      // Remove token from URL
+      window.history.replaceState({}, '', '/groups');
+    }
+
+    //fetch groups
+    groupsApi.getAll().then((res) => {
+      setLoading(true);
       if (res.success && res.data) {
+        setAuth(true);
         setGroups(
-          res.data.map(g => ({
+          res.data.map((g) => ({
             id: g.id,
             name: g.name,
             description: g.description,
             apiCount: g._count.apiSources,
-            backendUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/aggregate/${encodeURIComponent(g.name)}`
-          }))   //backend url for each group
+            backendUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/aggregate/${encodeURIComponent(
+              g.name
+            )}`,
+          }))
         );
+      } else {
+        setAuth(false);
+        if (res.error) toast.error(res.error);
+        toast.error('You have been logged out, please login again.');
       }
       setLoading(false);
     });
   }, []);
 
-  //handlers
   const handleCopy = (url: string) => {
     navigator.clipboard.writeText(url);
-    toast('Copied to clipboard!' , { icon: <ThumbsUp /> });
+    toast('Copied to clipboard!', { icon: <ThumbsUp /> });
   };
 
   const handleEdit = (groupId: string) => {
     router.push(`/groups/${groupId}`);
   };
 
-  const handleRun = (groupName: string)=>{
-    router.push(`/groups/response/${encodeURIComponent(groupName)}`)
-  }
+  const handleRun = (groupName: string) => {
+    router.push(`/groups/response/${encodeURIComponent(groupName)}`);
+  };
 
-  //new group creation handler
-  const handleCreateNew = async ()=>{
-    if(!groupName){
-      toast.error("Group Name Required!")
+  const handleCreateNew = async () => {
+    if (!groupName.trim()) {
+      toast.error('Group Name Required!');
       return;
     }
-
-    setCreating(true)
-
-    let res;
-
-    if(groupDescription){
-      res = await groupsApi.create({
-        name: groupName,
-        description: groupDescription
-      })
-    } else{
-      res = await groupsApi.create({
-        name: groupName,
-      })
-    }
-    setCreating(false)
-    setShowCreateForm(!showCreateForm)
-
-    if(res.success && res.data && groups){
-
-      const newGroup = {
+    setCreating(true);
+    const payload = { name: groupName, ...(groupDescription && { description: groupDescription }) };
+    const res = await groupsApi.create(payload);
+    setCreating(false);
+    setShowCreateForm(false);
+    if (res.success && res.data) {
+      const newGroup: GroupInfo = {
         id: res.data.id,
         name: res.data.name,
         description: res.data.description,
-        // apiCount: res.data._count.apiSources, //this might cause vercel deploy runtime err
-        apiCount: 0, //so i did this since it is always zeo fro now
-        backendUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/aggregate/${encodeURIComponent(res.data.name)}`
-      }
-      
-      setGroups((prevGroups =>{
-        return [...prevGroups, newGroup]
-      }))
+        apiCount: 0,
+        backendUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/aggregate/${encodeURIComponent(
+          res.data.name
+        )}`,
+      };
+      setGroups((prev) => [...prev, newGroup]);
+      toast.success('New Group Created!');
 
-      toast.success("New Group Created!")
-    } else{
-      toast.error(res.error || "Failed to Create Group, please try again!")
+      //test log
+      console.log(newGroup);
+    } else {
+      toast.error(res.error || 'Failed to Create Group, please try again!');
     }
-  }
+  };
+
+  //redirect if not authenticated
+  useEffect(() => {
+    if (auth === false) {
+      const timer = setTimeout(() => {
+        router.push(`${authUrl}`);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [auth, router]);
 
   if (loading) {
-    return <p className="flex text-center py-8 min-h-[75vh] items-center justify-center">Loading <span>  </span> <LoaderCircle width={18} height={18} /></p>;
+    return (
+      <p className="flex text-center py-8 items-center justify-center">
+        Loading <LoaderCircle className="ml-2" />
+      </p>
+    );
   }
 
-  //test logs
-  console.log(groups);
-  console.log(process.env.NEXT_PUBLIC_API_URL);
+  if (auth === false) {
+    return (
+      <div className="flex flex-col items-center gap-2 justify-center min-h-[75vh]">
+        <p className="text-lg">Your session has expired! Please sign in again.</p>
+        <p className="text-sm text-gray-500">Redirecting to login...</p>
+      </div>
+    );
+  }
 
   if (groups.length === 0) {
-    return <p className="text-center py-8 min-h-[75vh]">No groups available.</p>;
+    return(
+      <div>
+        <p className="">No groups available.</p>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-semibold">Your API Groups</h1>
+          <Button
+            className="hover:bg-black/70 border-black"
+            onClick={() => setShowCreateForm((v) => !v)}
+          >
+            <Plus /> New
+          </Button>
+        </div>
+        
+        <div className='flex '>
+          {showCreateForm && (
+          <div className="border border-black p-4 rounded mb-10">
+            <h3 className="font-medium mb-3">Create New Group</h3>
+            <div className="space-y-3">
+              <Input
+                placeholder="Group Name"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+                className="border-black"
+              />
+              <Input
+                placeholder="Description"
+                value={groupDescription}
+                onChange={(e) => setGroupDescription(e.target.value)}
+                className="border-black"
+              />
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleCreateNew}
+                  disabled={creating}
+                  className="bg-black text-white hover:bg-black/90"
+                >
+                  {creating ? 'Creating...' : 'Create'}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowCreateForm(false)}
+                  className="border-black hover:bg-black hover:text-white"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="px-4 py-8 min-h-screen">
-
-      <div className='flex justify-between items-center'>
-        <h1 className="text-3xl font-semibold mb-6">Your API Groups</h1>
-        <Button className='hover:bg-black/70 border-black' onClick={()=> setShowCreateForm(!showCreateForm)}>
-          <Plus></Plus> New
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-semibold">Your API Groups</h1>
+        <Button
+          className="hover:bg-black/70 border-black"
+          onClick={() => setShowCreateForm((v) => !v)}
+        >
+          <Plus /> New
         </Button>
       </div>
 
@@ -134,13 +221,13 @@ export default function GroupsPage() {
             <Input
               placeholder="Group Name"
               value={groupName}
-              onChange={e => setGroupName(e.target.value)}
+              onChange={(e) => setGroupName(e.target.value)}
               className="border-black"
             />
             <Input
               placeholder="Description"
               value={groupDescription}
-              onChange={e => setGroupDescription(e.target.value)}
+              onChange={(e) => setGroupDescription(e.target.value)}
               className="border-black"
             />
             <div className="flex gap-2">
@@ -153,12 +240,7 @@ export default function GroupsPage() {
               </Button>
               <Button
                 variant="outline"
-                onClick={() => {
-                  setShowCreateForm(false);
-                  setGroupName('');
-                  setGroupDescription('');
-                  handleCreateNew
-                }}
+                onClick={() => setShowCreateForm(false)}
                 className="border-black hover:bg-black hover:text-white"
               >
                 Cancel
@@ -169,8 +251,11 @@ export default function GroupsPage() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {groups.map(group => (
-          <div key={group.id} className="border border-black p-6 rounded-md flex flex-col justify-between">
+        {groups.map((group) => (
+          <div
+            key={group.id}
+            className="border border-black p-6 rounded-md flex flex-col justify-between"
+          >
             <div>
               <h2 className="text-xl font-semibold text-black">{group.name}</h2>
               {group.description && (
@@ -189,7 +274,7 @@ export default function GroupsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-black text-black hover:bg-black hover:text-white hover:cursor-pointer"
+                  className="border-black text-black hover:bg-black hover:text-white"
                   onClick={() => handleCopy(group.backendUrl)}
                 >
                   <Copy className="w-4 h-4" />
@@ -197,20 +282,27 @@ export default function GroupsPage() {
               </div>
             </div>
 
-            <div className='mt-4 flex justify-between'>
-                <Button variant="outline" size="sm" className="border-black bg-white text-black hover:bg-black hover:text-white hover:cursor-pointer" onClick={() => handleEdit(group.id)}>
-                    Edit
-                </Button>
-
-                <Button variant="outline" size="sm" className="border-black bg-black text-white hover:bg-white hover:text-black hover:cursor-pointer" onClick={()=>handleRun(group.name)}>
-                   <Zap className="w-4 h-4" /> Run
-                </Button>
+            <div className="mt-4 flex justify-between">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-black bg-white text-black hover:bg-black hover:text-white"
+                onClick={() => handleEdit(group.id)}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-black bg-black text-white hover:bg-white hover:text-black"
+                onClick={() => handleRun(group.name)}
+              >
+                <Zap className="w-4 h-4" /> Run
+              </Button>
             </div>
           </div>
         ))}
       </div>
-
     </div>
   );
 }
-
