@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { GroupController } from '../controllers/groupController';
+import { Auth } from '../middleware/auth'
 
 const router = Router();
 const ctrl = new GroupController();

@@ -10,8 +10,10 @@ export class AggregateController {
   //GET /api/aggregate
   async listGroups(req: Request, res: Response): Promise<void> {
     try {
+      const user = (req as any).user; //find user
+
       const groups = await prisma.apiGroup.findMany({
-        where: { isActive: true },
+        where: { isActive: true, authorId: user.authId },
         select: {
           id: true,
           name: true,
@@ -98,7 +100,7 @@ export class AggregateController {
 
       res.json(result);
     } catch (err) {
-      console.error("❌ aggregateGroup error:", err);
+      console.error("❌ oh shit! error:", err);
       res.status(500).json({ success: false, error: "Failed to aggregate group" });
     }
   }

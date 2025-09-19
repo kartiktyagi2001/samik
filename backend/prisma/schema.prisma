@@ -13,7 +13,8 @@ datasource db {
 
 model User{
   id        String   @id @default(cuid())
-  email     String   @unique
+  authId    String  @unique
+  email     String?   @unique
   name      String?
   password  String?
   createdAt DateTime @default(now())
@@ -34,7 +35,7 @@ model ApiGroup {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  author     User?      @relation(fields: [authorId], references: [id])
+  author     User?      @relation(fields: [authorId], references: [authId])
   authorId   String?
 }
 
