@@ -22,7 +22,7 @@ interface GroupInfo {
   backendUrl: string;
 }
 
-var authUrl = process.env.NEXT_PUBLIC_AUTH_URL;
+const authUrl = process.env.NEXT_PUBLIC_AUTH_URL;
 
 export default function GroupsPage() {
   const router = useRouter();
