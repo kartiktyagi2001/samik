@@ -7,7 +7,7 @@ import cors from 'cors';
 import { Auth } from './middleware/auth';
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
@@ -20,6 +20,8 @@ app.use((req, res, next) => {
 
 app.use('/api/groups',Auth, groupRouter);
 app.use('/api/aggregate',Auth, aggregateRouter);
+// app.use('/api/groups', groupRouter);
+// app.use('/api/aggregate', aggregateRouter);
 
 
 

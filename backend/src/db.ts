@@ -25,7 +25,7 @@ export async function connectDatabase() {
   }
 }
 
-//graceful shutdown
+//shutdown
 export async function disconnectDatabase() {
   try {
     await prisma.$disconnect();

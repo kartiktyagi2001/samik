@@ -14,6 +14,9 @@ export const Auth = async (req: AuthRequest, res: Response, next: NextFunction)=
 
     const header = req.headers.authorization
 
+    //testlog
+    // console.log("Authorization header:", header);
+
     if(!header){
         console.error("No no, signin first!")
         return res.status(401).json({error: "Please Signin!"})

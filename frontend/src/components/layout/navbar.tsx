@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 // const navigation = [
 //   {
@@ -25,6 +26,18 @@ import { Zap } from 'lucide-react';
 export function Navbar() {
   const pathname = usePathname();
 
+  const [auth, setAuth] = useState(false)
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token')
+
+    if(token){
+      setAuth(true)
+    }else{
+      setAuth(false)
+    }
+  }, [])
+
   return (
     <nav className="bg-gray-50">
       <div className="flex justify-between items-center text-center py-6 px-5">
@@ -38,15 +51,25 @@ export function Navbar() {
 
           {/* navigation */}
           <div className='flex gap-4 items-center justify-between'>
-            <Link href="/">
-            <span className='border-b-[0.5px] border-gray-900 text-sm'>Overview</span>
-          </Link>
 
-          <Link href="/">
+            {/* //only so logouth when signed in */}
+            {auth ?(
+              <span className='border-b-[0.5px] border-red-950 text-sm text-red-950 hover:cursor-pointer hover:border-red-800 hover:text-red-800' onClick={()=>{
+                localStorage.removeItem('token')
+                sessionStorage.clear()
+                window.location.href = '/'
+              }}>sign out</span>
+            ) : (
+              <Link href="/">
+                <span className='border-b-[0.5px] border-gray-900 text-sm'>Overview</span>
+              </Link>
+            )}
+
+            {/* <Link href="/">
               <img src="/discord.svg" alt="" height={24} width={24} />
-            </Link>
+            </Link> */}
 
-            <Link href="/">
+            <Link href="https://github.com/kartiktyagi2001/samik">
               <img src="/github.svg" alt="" height={21} width={21} />
             </Link>
           </div>
