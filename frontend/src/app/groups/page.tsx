@@ -121,29 +121,35 @@ export default function GroupsPage() {
   };
 
   //redirect if not authenticated
+  const [count, setCount] = useState(3); //3 second countdown
+
   useEffect(() => {
-    if (auth === false) {
-      const timer = setTimeout(() => {
-        router.push(`${authUrl}`);
-      }, 3000);
-      return () => clearTimeout(timer);
+  if (auth === false) {
+    if (count === 0) {
+      router.push(authUrl || '/login');
+      return;
     }
-  }, [auth, router]);
+    const timer = setTimeout(() => {
+      setCount(c => c - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }
+}, [auth, count, router]);
+
+if (auth === false) {
+  return (
+    <div>
+      <p className="text-lg">Your session has expired! Please sign in again.</p>
+      <p className="text-sm text-gray-500">Redirecting in {count} second{count > 1 ? 's' : ''}...</p>
+    </div>
+  );
+}
 
   if (loading) {
     return (
       <p className="flex text-center py-8 items-center justify-center">
         Loading <LoaderCircle className="ml-2" />
       </p>
-    );
-  }
-
-  if (auth === false) {
-    return (
-      <div className="flex flex-col items-center gap-2 justify-center min-h-[75vh]">
-        <p className="text-lg">Your session has expired! Please sign in again.</p>
-        <p className="text-sm text-gray-500">Redirecting to login...</p>
-      </div>
     );
   }
 
