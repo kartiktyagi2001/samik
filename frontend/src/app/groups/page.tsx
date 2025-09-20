@@ -154,56 +154,56 @@ if (auth === false) {
   }
 
   if (groups.length === 0) {
-    return(
-      <div className='flex flex-col gap-4 justify-center items-center px-4 py-8'>
-        <div className='flex justify-between items-center'>
-          <p className="">No groups available.</p>
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-semibold">Your API Groups</h1>
-            <Button
-              className="hover:bg-black/70 border-black"
-              onClick={() => setShowCreateForm((v) => !v)}
-            >
-              <Plus /> New
-            </Button>
-          </div>
+  return (
+      <div className="px-4 py-8 min-h-screen flex flex-col items-center">
+        <div className="flex justify-between items-center w-full max-w-5xl mb-6">
+          <h1 className="text-3xl font-semibold">Your API Groups</h1>
+          <Button
+            className="hover:bg-black/70 border-black"
+            onClick={() => setShowCreateForm((v) => !v)}
+          >
+            <Plus /> New
+          </Button>
         </div>
-        <div className='flex items-center justify-center w-full max-w-md'>
+
+        <p className="mb-6 text-gray-700">No groups available.</p>
+
+        <div className="w-full max-w-md">
           {showCreateForm && (
-          <div className="border border-black p-4 rounded mb-10">
-            <h3 className="font-medium mb-3">Create New Group</h3>
-            <div className="space-y-3">
-              <Input
-                placeholder="Group Name"
-                value={groupName}
-                onChange={(e) => setGroupName(e.target.value)}
-                className="border-black"
-              />
-              <Input
-                placeholder="Description"
-                value={groupDescription}
-                onChange={(e) => setGroupDescription(e.target.value)}
-                className="border-black"
-              />
-              <div className="flex gap-2">
-                <Button
-                  onClick={handleCreateNew}
-                  disabled={creating}
-                  className="bg-black text-white hover:bg-black/90"
-                >
-                  {creating ? 'Creating...' : 'Create'}
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowCreateForm(false)}
-                  className="border-black hover:bg-black hover:text-white"
-                >
-                  Cancel
-                </Button>
+            <div className="border border-black p-6 rounded-md">
+              <h3 className="font-semibold mb-4">Create New Group</h3>
+              <div className="space-y-4">
+                <Input
+                  placeholder="Group Name"
+                  value={groupName}
+                  onChange={(e) => setGroupName(e.target.value)}
+                  className="border-black"
+                />
+                <Input
+                  placeholder="Description"
+                  value={groupDescription}
+                  onChange={(e) => setGroupDescription(e.target.value)}
+                  className="border-black"
+                />
+                <div className="flex gap-3">
+                  <Button
+                    onClick={handleCreateNew}
+                    disabled={creating}
+                    className="bg-black text-white hover:bg-black/90"
+                  >
+                    {creating ? 'Creating...' : 'Create'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowCreateForm(false)}
+                    className="border-black hover:bg-black hover:text-white"
+                  >
+                    Cancel
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
         </div>
       </div>
     );
