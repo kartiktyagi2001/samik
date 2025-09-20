@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AxiosResponse } from 'axios';
-import {ResponseMerger} from './ResponseMerger'; // htis is how TypeScript + NodeNext + verbatimModuleSyntax resolve imports.
+import {ResponseMerger} from './ResponseMerger'; // htis is how TypeScript + NodeNext + verbatimModuleSyntax resolve imports
 import type { ApiSource, AggregatedResponse, ApiResponseMeta, ApiTestRequest, ApiTestResult } from '../types.js';
 
 export class ApiAggregator {

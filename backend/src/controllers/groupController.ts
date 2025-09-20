@@ -8,7 +8,11 @@ export class GroupController {
   //GET-> /api/groups to get all groups
   async getAllGroups(req: Request, res: Response) {
     try {
+      const user = (req as any).user; //Auth middleware adds user to req 
+
       const groups = await prisma.apiGroup.findMany({
+        where:{authorId: user.authId},  //only find particular users groups
+
         include: {
           apiSources: true,
           _count: { select: { apiSources: true, requests: true } }
@@ -19,16 +23,23 @@ export class GroupController {
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
     }
-  }
+  } //alternatively we can use /api/groups?authorId=xyz to get particular users groups(hell lotta modification)
 
   //POST-> /api/groups to create a new group
   async createGroup(req: Request, res: Response) {
     try {
+      const user = (req as any).user;
+
       const { name, description } = req.body;
       if (!name) return res.status(400).json({ success: false, error: 'Name required' });
-      const existing = await prisma.apiGroup.findFirst({ where: { name: { equals: name, mode: 'insensitive' } } });
-      if (existing) return res.status(409).json({ success: false, error: 'Group exists' });
-      const group = await prisma.apiGroup.create({ data: { name, description } });
+      const existing = await prisma.apiGroup.findFirst({
+          where: { 
+              authorId:user.authId,
+              name: { equals: name, mode: 'insensitive' } 
+            } 
+        });
+      if (existing) return res.status(409).json({ success: false, error: 'Group exists! Choose a different name' });
+      const group = await prisma.apiGroup.create({ data: { authorId:user.authId, name, description } });
       res.status(201).json({ success: true, data: group });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });

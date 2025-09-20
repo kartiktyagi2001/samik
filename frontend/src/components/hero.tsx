@@ -1,9 +1,15 @@
 'use client';
 
+const authUrl = process.env.NEXT_PUBLIC_AUTH_URL;
+
+interface AuthProps {
+  user: boolean;
+}
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export function HeroSection() {
+export function HeroSection({user}: AuthProps) {
   return (
     <section className="flex items-center justify-start bg-gray-50 px-4 py-10">
       <div className="max-w-6xl mx-auto text-center">
@@ -25,23 +31,42 @@ export function HeroSection() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-2 justify-center">
+        <div className="flex flex-col gap-6 justify-center">
           <span>
-            <Link href="/groups">
+            {user ? (
+              <Link href="/groups">
               <Button 
                 size="lg"
                 className="bg-black hover:bg-black/80 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
               >
-                Create Group
+                Workspace
               </Button>
             </Link>
+            ) : (
+              <Link href={`${authUrl}`}>
+                <Button 
+                size="lg"
+                className="bg-black hover:bg-black/80 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
+              >
+                Get Started
+              </Button>
+              </Link>
+            )}
           </span>
 
-          <span>
+          <span className='flex flex-col gap-2 sm:flex-row md:gap-4 justify-center'>
+            <Link href="/demo">
+              <span className='text-black/90 text-sm underline underline-offset-1'>Live Demo</span>
+            </Link>
+
             <Link href="/test">
               <span className='text-black/90 text-sm underline underline-offset-1'>test an API endpoint</span>
             </Link>
         </span>
+        </div>
+
+        <div>
+
         </div>
       </div>
     </section>

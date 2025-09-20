@@ -4,6 +4,7 @@ import { connectDatabase, disconnectDatabase } from './db';
 import groupRouter from './routes/groupRouter';
 import aggregateRouter from './routes/aggregateRouter'
 import cors from 'cors';
+import { Auth } from './middleware/auth';
 
 const app = express();
 const PORT = 3000;
@@ -17,8 +18,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/groups', groupRouter);
-app.use('/api/aggregate', aggregateRouter);
+app.use('/api/groups',Auth, groupRouter);
+app.use('/api/aggregate',Auth, aggregateRouter);
 
 
 

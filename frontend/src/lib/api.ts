@@ -44,12 +44,16 @@ export const groupsApi = {
   // GET /api/groups - Get all groups
   getAll: async (): Promise<ApiResponse<ApiGroup[]>> => {
     try {
-      const response = await fetch(`${API_BASE}/api/groups`);
+      const response = await fetch(`${API_BASE}/api/groups`, {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       return await handleApiResponse<ApiGroup[]>(response);
     } catch (error) {
       return {
         success: false,
-        error: 'Network error: Unable to fetch groups'
+        error: error instanceof Error ? error.message : 'Network error: Unable to fetch groups'
       };
     }
   },
@@ -57,7 +61,11 @@ export const groupsApi = {
   // GET /api/groups/:id - Get group by ID with details
   getById: async (id: string): Promise<ApiResponse<ApiGroup>> => {
     try {
-      const response = await fetch(`${API_BASE}/api/groups/${id}`);
+      const response = await fetch(`${API_BASE}/api/groups/${id}`, {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       return await handleApiResponse<ApiGroup>(response);
     } catch (error) {
       return {
@@ -73,7 +81,8 @@ export const groupsApi = {
       const response = await fetch(`${API_BASE}/api/groups`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(data)
       });
@@ -90,7 +99,8 @@ export const groupsApi = {
   delete: async (id: string): Promise<ApiResponse<void>> => {
     try {
       const response = await fetch(`${API_BASE}/api/groups/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}
       });
       return await handleApiResponse<void>(response);
     } catch (error) {
@@ -107,7 +117,8 @@ export const groupsApi = {
       const response = await fetch(`${API_BASE}/api/groups/${groupId}/apis`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(apiData)
       });
@@ -124,7 +135,8 @@ export const groupsApi = {
   removeApi: async (groupId: string, apiId: string): Promise<ApiResponse<void>> => {
     try {
       const response = await fetch(`${API_BASE}/api/groups/${groupId}/apis/${apiId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}
       });
       return await handleApiResponse<void>(response);
     } catch (error) {
@@ -138,7 +150,7 @@ export const groupsApi = {
 
 // Aggregation API - /api/aggregate endpoints
 export const aggregationApi = {
-  //GET /api/aggregate - List all available groups for aggregation
+  //GET /api/aggregate - List all available groups for aggregation, not using it rn
   listGroups: async (): Promise<AggregationListResponse> => {
     try {
       const response = await fetch(`${API_BASE}/api/aggregate`);
@@ -160,7 +172,11 @@ export const aggregationApi = {
   //GET /api/aggregate/:groupName - Aggregate data from APIs
   aggregateGroup: async (groupName: string): Promise<ApiResponse<AggregatedResponse>> => {
     try {
-      const response = await fetch(`${API_BASE}/api/aggregate/${groupName}`);
+      const response = await fetch(`${API_BASE}/api/aggregate/${groupName}`,{
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       return await handleApiResponse<AggregatedResponse>(response);
     } catch (error) {
       return {
@@ -170,7 +186,7 @@ export const aggregationApi = {
     }
   },
 
-  // GET /api/aggregate/:groupName?format=csv - Get aggregated data as CSV (idk but i will use client-side conversion so might not require it)
+  // GET /api/aggregate/:groupName?format=csv - Get aggregated data as CSV (idk but i will use client-side conversion so might not require it), not using it rn
   aggregateGroupCsv: async (groupName: string): Promise<string> => {
     try {
       const response = await fetch(`${API_BASE}/api/aggregate/${groupName}?format=csv`);
@@ -191,7 +207,8 @@ export const aggregationApi = {
       const response = await fetch(`${API_BASE}/api/aggregate/test`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(apiData)
       });

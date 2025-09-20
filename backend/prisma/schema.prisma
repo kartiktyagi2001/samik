@@ -9,6 +9,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//User model
+
+model User{
+  id        String   @id @default(cuid())
+  authId    String  @unique
+  email     String?   @unique
+  name      String?
+  password  String?
+  createdAt DateTime @default(now())
+
+  apiGroups ApiGroup[]
+}
+
 // API group model
 model ApiGroup {
   id          String      @id @default(cuid())
@@ -21,6 +34,9 @@ model ApiGroup {
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  author     User?      @relation(fields: [authorId], references: [authId])
+  authorId   String?
 }
 
 enum HttpMethod {
