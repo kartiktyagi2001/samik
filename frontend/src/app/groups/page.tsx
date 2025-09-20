@@ -155,19 +155,20 @@ if (auth === false) {
 
   if (groups.length === 0) {
     return(
-      <div>
-        <p className="">No groups available.</p>
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-semibold">Your API Groups</h1>
-          <Button
-            className="hover:bg-black/70 border-black"
-            onClick={() => setShowCreateForm((v) => !v)}
-          >
-            <Plus /> New
-          </Button>
+      <div className='flex flex-col gap-4 justify-center items-center px-4 py-8'>
+        <div className='flex justify-between items-center'>
+          <p className="">No groups available.</p>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-semibold">Your API Groups</h1>
+            <Button
+              className="hover:bg-black/70 border-black"
+              onClick={() => setShowCreateForm((v) => !v)}
+            >
+              <Plus /> New
+            </Button>
+          </div>
         </div>
-        
-        <div className='flex '>
+        <div className='flex items-center justify-center w-full max-w-md'>
           {showCreateForm && (
           <div className="border border-black p-4 rounded mb-10">
             <h3 className="font-medium mb-3">Create New Group</h3>
