@@ -1,11 +1,10 @@
-// app/layout.tsx - Root layout component
-
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/sonner';
+// import { Provider } from "@/components/ui/provider"
 
 
 const poppins = Poppins({
@@ -29,9 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <div className="min-h-screen bg-gray-50">
+        <div className="bg-gray-50">
           <Navbar />
-          <main className="container mx-auto px-4 min-h-screen">
+          <main className="container mx-auto px-4 min-h-[80vh]">
             {children}
             <Toaster />
           </main>

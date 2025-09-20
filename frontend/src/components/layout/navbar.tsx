@@ -39,14 +39,14 @@ export function Navbar() {
   }, [])
 
   return (
-    <nav className="bg-gray-50">
+    <nav className="sticky top-0 left-0 w-full bg-gray-50 z-50 h-16 mb-10">
       <div className="flex justify-between items-center text-center py-6 px-5">
         {/* logo and title */}
           <Link href="/" className="flex items-center space-x-0">
             <div className="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center">
               <Zap className="w-5 h-5 text-black" />
             </div>
-            <span className="text-2xl font-[500] text-gray-900">DataForge</span>
+            <span className="text-2xl font-[500] text-gray-900">Samik</span>
           </Link>
 
           {/* navigation */}

@@ -25,7 +25,7 @@ export function useHealthStatus(pollIntervalMs: number = 30000) {
 
     //init check
     checkStatus();
-    // Poll on interval
+    //poll on interval
     const id = setInterval(checkStatus, pollIntervalMs);
     return () => clearInterval(id);
   }, [pollIntervalMs]);

@@ -7,7 +7,7 @@ import { ApiGroup, ApiSource } from '@/lib/types';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Copy, Plus, Trash2, ArrowLeft } from 'lucide-react';
+import { Copy, Plus, Trash2, ChevronLeft } from 'lucide-react';
 
 export default function GroupDetailsPage() {
   const params = useParams();
@@ -110,7 +110,7 @@ export default function GroupDetailsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-[80vh] flex items-center justify-center">
         <p className="text-lg">Loading group details...</p>
       </div>
     );
@@ -118,7 +118,7 @@ export default function GroupDetailsPage() {
 
   if (!group) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-[80vh] flex items-center justify-center">
         <p className="text-lg">Group not found</p>
       </div>
     );
@@ -129,22 +129,22 @@ export default function GroupDetailsPage() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button 
-          variant="outline" 
-          size="sm"
-          onClick={() => router.back()}
-          className="border-black hover:bg-black hover:text-white"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
+      <div className="flex items-center justify-between">
+        
         <div>
           <h1 className="text-3xl font-bold">{group.name}</h1>
           <p className="text-gray-600 mt-1">
             {group.description || 'No description provided'}
           </p>
         </div>
+
+        <Button 
+          variant="outline"
+          onClick={() => router.back()}
+          className="border-black hover:bg-black hover:text-white"
+        >
+          <ChevronLeft />
+        </Button>
       </div>
 
       {/* group cards */}
@@ -276,7 +276,7 @@ export default function GroupDetailsPage() {
           onClick={() => router.push('/groups')}
           className="border-black hover:bg-black hover:text-white"
         >
-          Back to Groups
+          <ChevronLeft />
         </Button>
         <Button
           onClick={handleDeleteGroup}

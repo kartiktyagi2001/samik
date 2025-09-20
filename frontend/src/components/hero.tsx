@@ -11,16 +11,24 @@ import Link from 'next/link';
 
 export function HeroSection({user}: AuthProps) {
   return (
-    <section className="flex items-center justify-start bg-gray-50 px-4 py-10">
+    <section className="min-h-[80vh] flex items-center justify-start bg-gray-50 px-4 py-10">
       <div className="max-w-6xl mx-auto text-center">
 
         <div className="space-y-4 mb-8">
           <h1 className="text-7xl sm:text-7xl md:text-7xl lg:text-8xl font-normal leading-tight">
 
-            <span className="text-gray-900">Unified </span>
-            <span className="bg-gradient-to-r from-green-400 via-teal-400 to-blue-500 bg-clip-text text-transparent">
+            <span className="text-gray-900 ">Unified </span>
+            <span className="bg-gradient-to-r from-blue-400 via-teal-400 to-purple-500 bg-clip-text text-transparent">
               APIs
             </span>
+
+            {/* <span className="bg-gradient-to-r from-green-400 via-teal-400 to-blue-500 bg-clip-text text-transparent">
+              APIs
+            </span> */}
+
+            {/* <span className="bg-black px-2 -mx-3 text-white">
+              APIs
+            </span> */}
 
           </h1>
         </div>
@@ -54,7 +62,7 @@ export function HeroSection({user}: AuthProps) {
             )}
           </span>
 
-          <span className='flex flex-col gap-2 sm:flex-row md:gap-4 justify-center'>
+          <span className='flex flex-col gap-4 sm:flex-row md:gap-4 justify-center'>
             <Link href="/demo">
               <span className='text-black/90 text-sm underline underline-offset-1'>Live Demo</span>
             </Link>

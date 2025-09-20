@@ -6,6 +6,8 @@ import { groupsApi } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+// import { Spinner } from "@chakra-ui/react"
+// import { LoaderOne, LoaderFour } from "@/components/ui/loader";
 import {
   Copy,
   ThumbsUp,
@@ -147,16 +149,19 @@ if (auth === false) {
 
   if (loading) {
     return (
-      <p className="flex text-center py-8 items-center justify-center">
-        Loading <LoaderCircle className="ml-2" />
-      </p>
+      <div className='flex text-center py-8 items-center justify-center min-h-[80vh]'>
+        <p className="flex text-center py-8 items-center justify-center">
+          {/* <Spinner size="lg" /> */}
+          Loading...
+        </p>
+      </div>
     );
   }
 
   if (groups.length === 0) {
   return (
-      <div className="px-4 py-8 min-h-screen flex flex-col items-center">
-        <div className="flex justify-between items-center w-full max-w-5xl mb-6">
+      <div className="px-4 py-8 flex flex-col items-center">
+        <div className="flex justify-between items-center w-full max-w-full mb-10">
           <h1 className="text-3xl font-semibold">Your API Groups</h1>
           <Button
             className="hover:bg-black/70 border-black"
@@ -166,9 +171,9 @@ if (auth === false) {
           </Button>
         </div>
 
-        <p className="mb-6 text-gray-700">No groups available.</p>
+        <p className="mb-10 text-gray-700">No groups available.</p>
 
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-full">
           {showCreateForm && (
             <div className="border border-black p-6 rounded-md">
               <h3 className="font-semibold mb-4">Create New Group</h3>
@@ -210,7 +215,7 @@ if (auth === false) {
   }
 
   return (
-    <div className="px-4 py-8 min-h-screen">
+    <div className="px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-semibold">Your API Groups</h1>
         <Button

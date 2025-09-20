@@ -54,7 +54,7 @@ export default function HomePage() {
   }, [user])
 
   return (
-    <div className='min-h-screen flex flex-col justify-center items-center'>
+    <div className='flex flex-col justify-center items-center'>
       <HeroSection user={user} />
 
       <div>
