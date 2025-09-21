@@ -76,7 +76,7 @@ export default function AggregatePage() {
             <Button
             variant="outline"
             className="border-black text-black hover:bg-black hover:text-white"
-            onClick={() => router.push('/groups')}
+            onClick={() => router.back()}
             >
             <ChevronLeft />
             </Button>
