@@ -84,7 +84,6 @@ model DemoGroup {
   description String?
   isActive    Boolean     @default(true)
 
-  // Add the missing relations
   apiSources  DemoApiSource[]
   requests    DemoRequest[]
 
@@ -96,10 +95,15 @@ model DemoApiSource {
   id          String    @id @default(cuid())
   name        String
   url         String
-  method      String    @default("GET")
-  timeout     Int       @default(30000)
+  method      HttpMethod    @default(GET)
+  headers     Json?
+  queryParams Json?
+  timeout     Int      @default(30000)
+  isActive    Boolean  @default(true)
+  
   groupId     String
   apiGroup    DemoGroup @relation(fields: [groupId], references: [id])
+
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }

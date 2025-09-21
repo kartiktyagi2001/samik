@@ -5,6 +5,7 @@ import groupRouter from './routes/groupRouter';
 import aggregateRouter from './routes/aggregateRouter'
 import cors from 'cors';
 import { Auth } from './middleware/auth';
+import demoRouter from './routes/demoRouter';
 
 const app = express();
 const PORT = 8080;
@@ -19,9 +20,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/groups',Auth, groupRouter);
-app.use('/api/aggregate',Auth, aggregateRouter);
-// app.use('/api/groups', groupRouter);
-// app.use('/api/aggregate', aggregateRouter);
+app.use('/api/aggregate', aggregateRouter);
+app.use('/demo', demoRouter)
 
 
 

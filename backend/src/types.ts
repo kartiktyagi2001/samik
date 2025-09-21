@@ -76,3 +76,39 @@ export interface ApiTestResult {
   };
   error?: string;
 }
+
+// types/demo.ts
+
+export interface DemoApiSource {
+  id: string;
+  name: string;
+  url: string;
+  method: string;     
+  timeout: number;    
+  groupId: string;
+  createdAt: string;  
+  updatedAt: string;  
+}
+
+export interface DemoRequest {
+  id: string;
+  endpoint: string;
+  method: string;     
+  params?: Record<string, any>;
+  response: any;      
+  metadata: any;      
+  createdAt: string;  
+  groupId: string;
+}
+
+export interface DemoGroup {
+  id: string;
+  name: string;
+  description?: string;
+  isActive: boolean;
+  createdAt: string;  
+  updatedAt: string;  
+
+  apiSources?: DemoApiSource[];
+  requests?: DemoRequest[];
+}
