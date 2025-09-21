@@ -362,6 +362,9 @@ export class DemoAggrCtrl {
   async aggregateGroup(req: Request, res: Response): Promise<void> {
     try {
       const groupName = req.params.groupName;
+      //testlog
+      console.log(groupName);
+      
       const format = String(req.query.format || "json");
 
 
@@ -401,7 +404,7 @@ export class DemoAggrCtrl {
       await prisma.demoRequest.create({
         data: {
           method: "GET",
-          endpoint: `/api/aggregate/${groupName}`,
+          endpoint: `/demo/aggregate/${groupName}`,
           params: { format, query: req.query } as Prisma.InputJsonValue,
           response: {
             success: result.success,
