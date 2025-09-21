@@ -1,5 +1,3 @@
-// lib/api.ts - Centralized API client functions matching your backend endpoints
-
 import {
   ApiGroup,
   ApiSource,
@@ -222,8 +220,138 @@ export const aggregationApi = {
   }
 };
 
+// Demo API - /demo endpoints (no authentication required)
+export const demoApi = {
+  // GET /demo - Get all demo groups
+  getAll: async (): Promise<ApiResponse<ApiGroup[]>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo`);
+      return await handleApiResponse<ApiGroup[]>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Network error: Unable to fetch demo groups'
+      };
+    }
+  },
+
+  // GET /demo/:id - Get demo group by ID with details
+  getById: async (id: string): Promise<ApiResponse<ApiGroup>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo/${id}`);
+      return await handleApiResponse<ApiGroup>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to fetch demo group details'
+      };
+    }
+  },
+
+  // POST /demo - Create new demo group
+  create: async (data: CreateGroupRequest): Promise<ApiResponse<ApiGroup>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return await handleApiResponse<ApiGroup>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to create demo group'
+      };
+    }
+  },
+
+  // DELETE /demo/:id - Delete demo group
+  delete: async (id: string): Promise<ApiResponse<void>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo/${id}`, {
+        method: 'DELETE'
+      });
+      return await handleApiResponse<void>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to delete demo group'
+      };
+    }
+  },
+
+  // POST /demo/:id/apis - Add API to demo group
+  addApi: async (groupId: string, apiData: AddApiRequest): Promise<ApiResponse<ApiSource>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo/${groupId}/apis`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(apiData)
+      });
+      return await handleApiResponse<ApiSource>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to add API to demo group'
+      };
+    }
+  },
+
+  // DELETE /demo/:groupId/apis/:apiId - Remove API from demo group
+  removeApi: async (groupId: string, apiId: string): Promise<ApiResponse<void>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo/${groupId}/apis/${apiId}`, {
+        method: 'DELETE'
+      });
+      return await handleApiResponse<void>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to remove API from demo group'
+      };
+    }
+  },
+
+  // GET /demo/:groupName - Aggregate data from demo group APIs
+  aggregateGroup: async (groupName: string): Promise<ApiResponse<AggregatedResponse>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo/${groupName}`);
+      return await handleApiResponse<AggregatedResponse>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to aggregate demo group data'
+      };
+    }
+  },
+
+  // POST /demo/test - Test individual API before adding to demo group
+  testApi: async (apiData: ApiTestRequest): Promise<ApiResponse<ApiTestResult>> => {
+    try {
+      const response = await fetch(`${API_BASE}/demo/test`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(apiData)
+      });
+      return await handleApiResponse<ApiTestResult>(response);
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Network error: Unable to test API'
+      };
+    }
+  }
+};
+
 // Export all APIs as a single object for convenience
 export const api = {
   groups: groupsApi,
-  aggregation: aggregationApi
+  aggregation: aggregationApi,
+  demo: demoApi
 };
