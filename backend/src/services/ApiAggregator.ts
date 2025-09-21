@@ -96,6 +96,9 @@ export class ApiAggregator {
 
       //test log
       console.log(`calling ${apiSource.name}: ${apiSource.method} ${apiSource.url}`);
+      console.log(`Headers:`, apiSource.headers);
+      console.log(`QueryParams:`, apiSource.queryParams);
+      console.log(`Timeout:`, apiSource.timeout);
       
       const response: AxiosResponse = await axios({
         method: apiSource.method as any,

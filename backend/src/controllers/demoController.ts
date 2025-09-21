@@ -379,7 +379,7 @@ export class DemoAggrCtrl {
           name: { equals: groupName, mode: "insensitive" },
           isActive: true
         },
-        include:{apiSources: true}
+        include: { apiSources: { where: { isActive: true } } }
       });
 
 

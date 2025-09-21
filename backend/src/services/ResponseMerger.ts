@@ -134,7 +134,8 @@ export class ResponseMerger{
     
     let current = obj;
     for (const key of keys) {
-      if (!(key in current) || typeof current[key] !== 'object') {
+      // if (!(key in current) || typeof current[key] !== 'object') //eralier null was not being handled causing error later
+      if (!(key in current) || typeof current[key] !== 'object' || current[key] === null) {
         current[key] = {};
       }
       current = current[key];
