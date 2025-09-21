@@ -12,7 +12,7 @@ router.get('/:id', groupctrl.getGroupById.bind(groupctrl));
 router.post('/:id/apis', groupctrl.addApiToGroup.bind(groupctrl));
 router.delete('/:groupId/apis/:apiId', groupctrl.removeApiFromGroup.bind(groupctrl));
 router.delete('/:id', groupctrl.deleteGroup.bind(groupctrl));
-router.get('/:groupName', aggrctrl.aggregateGroup.bind(aggrctrl));
+router.get('/aggregate/:groupName', aggrctrl.aggregateGroup.bind(aggrctrl));
 router.post('/test', aggrctrl.testApi.bind(aggrctrl));
 
 
