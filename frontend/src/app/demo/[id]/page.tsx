@@ -188,6 +188,7 @@ export default function GroupDetailsPage() {
           <Button
             onClick={() => setShowAddForm(!showAddForm)}
             className="bg-black text-white hover:bg-black/90"
+            disabled
           >
             <Plus className="w-4 h-4 mr-2" />
             Add API
@@ -259,6 +260,7 @@ export default function GroupDetailsPage() {
                     size="sm"
                     onClick={() => handleRemoveApi(api.id)}
                     className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white ml-4"
+                    disabled
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -281,6 +283,7 @@ export default function GroupDetailsPage() {
         <Button
           onClick={handleDeleteGroup}
           className="bg-red-600 text-white hover:bg-red-700"
+          disabled
         >
           Delete Group
         </Button>

@@ -122,6 +122,7 @@ export default function DemoPage() {
           <Button
             className="hover:bg-black/70 border-black"
             onClick={() => setShowCreateForm((v) => !v)}
+            // disabled
           >
             <Plus /> New
           </Button>
@@ -177,6 +178,7 @@ export default function DemoPage() {
         <Button
           className="hover:bg-black/70 border-black"
           onClick={() => setShowCreateForm((v) => !v)}
+          disabled
         >
           <Plus /> New
         </Button>
