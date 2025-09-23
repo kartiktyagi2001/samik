@@ -164,14 +164,14 @@ if (auth === false) {
         <div className="flex justify-between items-center w-full max-w-full mb-10">
           <h1 className="text-3xl font-semibold">Your API Groups</h1>
           <Button
-            className="hover:bg-black/70 border-black"
+            className="hover:bg-black/70 border-black dark:hover:bg-white/60"
             onClick={() => setShowCreateForm((v) => !v)}
           >
             <Plus /> New
           </Button>
         </div>
 
-        <p className="mb-10 text-gray-700">No groups available.</p>
+        <p className="mb-10 text-zinc-700">No groups available.</p>
 
         <div className="w-full max-w-full">
           {showCreateForm && (
@@ -219,7 +219,7 @@ if (auth === false) {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-semibold">Your API Groups</h1>
         <Button
-          className="hover:bg-black/70 border-black"
+          className="hover:bg-black/70 border-black dark:hover:bg-white/50"
           onClick={() => setShowCreateForm((v) => !v)}
         >
           <Plus /> New
@@ -227,26 +227,26 @@ if (auth === false) {
       </div>
 
       {showCreateForm && (
-        <div className="border border-black p-4 rounded mb-10">
+        <div className="border border-black dark:border-zinc-800 p-4 rounded mb-10">
           <h3 className="font-medium mb-3">Create New Group</h3>
           <div className="space-y-3">
             <Input
               placeholder="Group Name"
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
-              className="border-black"
+              className="border-black dark:border-zinc-800"
             />
             <Input
               placeholder="Description"
               value={groupDescription}
               onChange={(e) => setGroupDescription(e.target.value)}
-              className="border-black"
+              className="border-black dark:border-zinc-800"
             />
             <div className="flex gap-2">
               <Button
                 onClick={handleCreateNew}
                 disabled={creating}
-                className="bg-black text-white hover:bg-black/90"
+                className="bg-black dark:bg-white text-white dark:text-black hover:bg-black/90 dark:hover:bg-white/80"
               >
                 {creating ? 'Creating...' : 'Create'}
               </Button>
@@ -266,27 +266,27 @@ if (auth === false) {
         {groups.map((group) => (
           <div
             key={group.id}
-            className="border border-black p-6 rounded-md flex flex-col justify-between"
+            className="border border-black dark:border-zinc-800 p-6 rounded-md flex flex-col justify-between"
           >
             <div>
-              <h2 className="text-xl font-semibold text-black">{group.name}</h2>
+              <h2 className="text-xl font-semibold text-black dark:text-white">{group.name}</h2>
               {group.description && (
-                <p className="mt-2 text-sm text-gray-700">{group.description}</p>
+                <p className="mt-2 text-sm text-gray-700 dark:text-zinc-400">{group.description}</p>
               )}
             </div>
 
             <div className="mt-4">
-              <p className="text-sm text-black">
+              <p className="text-sm text-black dark:text-white">
                 APIs: <span className="font-medium">{group.apiCount}</span>
               </p>
               <div className="mt-3 flex items-center space-x-2">
-                <code className="text-xs text-gray-800 bg-gray-100 px-2 py-1 rounded truncate">
+                <code className="text-xs text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-900 px-2 py-1 rounded truncate">
                   {group.backendUrl}
                 </code>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-black text-black hover:bg-black hover:text-white"
+                  className="border-black hover:bg-black hover:text-white"
                   onClick={() => handleCopy(group.backendUrl)}
                 >
                   <Copy className="w-4 h-4" />
@@ -298,7 +298,7 @@ if (auth === false) {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-black bg-white text-black hover:bg-black hover:text-white"
+                className="border-black bg-white dark:text-white text-black hover:bg-black hover:text-white"
                 onClick={() => handleEdit(group.id)}
               >
                 Edit
@@ -306,7 +306,7 @@ if (auth === false) {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-black bg-black text-white hover:bg-white hover:text-black"
+                className="border-black bg-black text-white hover:bg-white hover:text-black dark:bg-black dark:hover:text-white dark:hover:bg-zinc-950"
                 onClick={() => handleRun(group.name)}
               >
                 <Zap className="w-4 h-4" /> Run

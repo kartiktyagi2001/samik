@@ -7,7 +7,7 @@ import { AggregatedResponse } from '@/lib/types';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { copyToClipboard, downloadData } from '@/lib/dataUtils';
-import { Copy, Download, ArrowLeft, ChevronLeft} from 'lucide-react';
+import { Copy, Download, ArrowLeft, ChevronLeft, Zap} from 'lucide-react';
 
 
 type DataRow = Record<string, unknown>;
@@ -114,21 +114,21 @@ export default function AggregatePage() {
         <div className='flex justify-between gap-4'>
             <Button
             variant="outline"
-            className="border-black text-black hover:bg-black hover:text-white"
-            onClick={() => router.push('/groups')}
+            className="border-black hover:bg-black hover:text-white"
+            onClick={() => router.back()}
             >
             <ChevronLeft />
             </Button>
         
             <Button
             variant="outline"
-            className="border-black bg-black text-white hover:bg-black/80 hover:text-white"
+            className="border-black bg-black dark:bg-black text-white hover:bg_black/80 dark:hover:bg-zinc-950 hover:text-white"
             onClick={() => {
                 setRunAgain(runAgain+1)
                 toast.success("Fetching Response Again! Please Wait!")
             }}
             >
-            Run Again
+            <Zap className="w-4 h-4" /> Again
             </Button>
         </div>
       </div>
@@ -141,29 +141,29 @@ export default function AggregatePage() {
           <section>
             <h2 className="text-2xl font-medium mb-4">Data</h2>
             {!Array.isArray(data) || data.length === 0 ? (
-              <p className="text-gray-600">No data returned.</p>
+              <p className="text-zinc-600">No data returned.</p>
             ) : (
 
             <div>
-                <div className="overflow-auto border border-black rounded">
-                    <table className="min-w-full divide-y divide-black">
-                    <thead className="bg-gray-100">
+                <div className="overflow-auto border border-black dark:border-zinc-800 rounded">
+                    <table className="min-w-full divide-y divide-black dark:divide-white">
+                    <thead className="bg-zinc-100 dark:bg-zinc-900">
                         <tr>
                         {headers.map(header => (
                             <th
                             key={header}
-                            className="px-4 py-2 text-left text-sm font-medium text-gray-700"
+                            className="px-4 py-2 text-left text-sm font-medium text-zinc-700 dark:text-zinc-300"
                             >
                             {header}
                             </th>
                         ))}
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-black">
+                    <tbody className="divide-y divide-black dark:divide-white">
                         {data.map((row, idx) => (
-                        <tr key={idx} className="bg-white">
+                        <tr key={idx} className="bg-white dark:bg-zinc-900">
                             {headers.map(header => (
-                            <td key={header} className="px-4 py-2 text-sm text-gray-800">
+                            <td key={header} className="px-4 py-2 text-sm text-zinc-800 dark:text-zinc-200">
                                 {String((row as DataRow)[header] ?? '')}
                             </td>
                             ))}
@@ -179,7 +179,7 @@ export default function AggregatePage() {
                         <Button
                         size="sm"
                         variant="outline"
-                        className="border-black text-black hover:bg-black hover:text-white hidden sm:flex"
+                        className="border-black dark:border-zinc-800 text-black dark:text-white hover:bg-black hover:text-white hidden sm:flex"
                         onClick={() => copyToClipboard(data, 'json')}
                         >
                         <Copy /> JSON
@@ -188,7 +188,7 @@ export default function AggregatePage() {
                         <Button
                         size="sm"
                         variant="outline"
-                        className="border-black text-black hover:bg-black hover:text-white"
+                        className="border-black dark:border-zinc-800 text-black dark:text-white hover:bg-black hover:text-white"
                         onClick={() => copyToClipboard(data, 'csv')}
                         >
                         <Copy /> <span className='hidden sm:flex'>CSV</span>
@@ -199,7 +199,7 @@ export default function AggregatePage() {
                         <Button
                         variant="outline"
                         size="sm"
-                        className="border-black text-black hover:bg-black hover:text-white text-sm hidden sm:flex"
+                        className="border-black dark:border-zinc-800 text-black dark:text-white hover:bg-black hover:text-white text-sm hidden sm:flex"
                         onClick={() => downloadData(data, 'json', groupName)}
                         >
                         <Download /> JSON
@@ -208,7 +208,7 @@ export default function AggregatePage() {
                         <Button
                         variant="outline"
                         size="sm"
-                        className="border-black text-black hover:bg-black hover:text-white"
+                        className="border-black dark:border-zinc-800 text-black dark:text-white hover:bg-black hover:text-white"
                         onClick={() => downloadData(data, 'csv', groupName)}
                         >
                         <Download /> <span className='hidden sm:flex'>CSV</span>
@@ -226,20 +226,20 @@ export default function AggregatePage() {
                 <h2 className="text-2xl font-medium mb-4">Information</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="border border-black p-4 rounded">
-                    <h3 className="font-medium text-sm text-gray-600">Total APIs</h3>
+                <div className="border border-black dark:border-zinc-800 p-4 rounded">
+                    <h3 className="font-medium text-sm text-zinc-600 dark:text-zinc-400">Total APIs</h3>
                     <p className="text-xl font-bold">{metadata.totalAPIs}</p>
                 </div>
-                <div className="border border-black p-4 rounded">
-                    <h3 className="font-medium text-sm text-gray-600">Successes</h3>
+                <div className="border border-black dark:border-zinc-800 p-4 rounded">
+                    <h3 className="font-medium text-sm text-zinc-600 dark:text-zinc-400">Successes</h3>
                     <p className="text-xl font-bold">{metadata.successfulAPIs}</p>
                 </div>
-                <div className="border border-black p-4 rounded">
-                    <h3 className="font-medium text-sm text-gray-600">Failures</h3>
+                <div className="border border-black dark:border-zinc-800 p-4 rounded">
+                    <h3 className="font-medium text-sm text-zinc-600 dark:text-zinc-400">Failures</h3>
                     <p className="text-xl font-bold">{metadata.failedAPIs}</p>
                 </div>
-                <div className="border border-black p-4 rounded">
-                    <h3 className="font-medium text-sm text-gray-600">Time (ms)</h3>
+                <div className="border border-black dark:border-zinc-800 p-4 rounded">
+                    <h3 className="font-medium text-sm text-zinc-600 dark:text-zinc-400">Time (ms)</h3>
                     <p className="text-xl font-bold">{metadata.responseTime}</p>
                 </div>
                 </div>

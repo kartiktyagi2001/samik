@@ -76,11 +76,11 @@ export default function ApiTestPage() {
             onChange={e => handleChange('method', e.target.value)}
             className="w-full border p-2 rounded"
           >
-            <option>GET</option>
-            <option>POST</option>
-            <option>PUT</option>
-            <option>DELETE</option>
-            <option>PATCH</option>
+            <option className='bg-gray-50 dark:bg-zinc-900'>GET</option>
+            <option className='bg-gray-50 dark:bg-zinc-900'>POST</option>
+            <option className='bg-gray-50 dark:bg-zinc-900'>PUT</option>
+            <option className='bg-gray-50 dark:bg-zinc-900'>DELETE</option>
+            <option className='bg-gray-50 dark:bg-zinc-900'>PATCH</option>
           </select>
         </div>
 
@@ -96,6 +96,7 @@ export default function ApiTestPage() {
       </div>
 
       <Button
+        variant='outline'
         onClick={handleSubmit}
         disabled={loading}
         className="bg-black text-white hover:bg-black/80"
@@ -106,16 +107,16 @@ export default function ApiTestPage() {
       {result && (
         <div className="mt-6 space-y-4">
           <h2 className="text-xl font-medium">Result Preview</h2>
-          <div>
+          <div className='dark:text-zinc-500'>
             <strong>Success:</strong> {String(result.success)}
           </div>
-          <div>
+          <div className='dark:text-zinc-500'>
             <strong>Response Time:</strong> {result.responseTime} ms
           </div>
           {result.dataPreview && (
-            <div className="mt-2">
+            <div className="mt-2 dark:text-zinc-500">
               <strong>Data Preview:</strong>
-              <pre className="bg-gray-100 p-4 rounded overflow-auto text-sm">
+              <pre className="bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 p-4 rounded overflow-auto text-sm">
                 {JSON.stringify(result.dataPreview, null, 2)}
               </pre>
             </div>
