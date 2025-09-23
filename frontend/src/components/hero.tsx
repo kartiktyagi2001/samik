@@ -11,14 +11,14 @@ import Link from 'next/link';
 
 export function HeroSection({user}: AuthProps) {
   return (
-    <section className="min-h-[80vh] flex items-center justify-start bg-gray-50 px-4 py-10">
+    <section className="min-h-[80vh] flex items-center justify-start px-4 py-10">
       <div className="max-w-6xl mx-auto text-center">
 
         <div className="space-y-4 mb-8">
           <h1 className="text-7xl sm:text-7xl md:text-7xl lg:text-8xl font-normal leading-tight">
 
-            <span className="text-gray-900 ">Unified </span>
-            <span className="bg-gradient-to-r from-blue-400 via-teal-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="text-gray-900 dark:text-gray-300">Unified </span>
+            <span className="bg-gradient-to-r from-blue-400 via-teal-400 to-purple-500 dark:from-blue-700 dark:via-teal-600 dark:to-purple-500 bg-clip-text text-transparent">
               APIs
             </span>
 
@@ -34,7 +34,7 @@ export function HeroSection({user}: AuthProps) {
         </div>
 
         <div className="max-w-4xl mx-auto mb-12">
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 font-normal leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 font-normal leading-relaxed">
             Your data integration layer, bringing multiple APIs together, standardized into one reliable endpoint
           </p>
         </div>
@@ -45,7 +45,7 @@ export function HeroSection({user}: AuthProps) {
               <Link href="/groups">
               <Button 
                 size="lg"
-                className="bg-black hover:bg-black/80 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
+                className="bg-black dark:bg-purple-500 hover:bg-black/80 dark:hover:bg-purple-600 hover:cursor-pointer text-white dark:text-black px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
               >
                 Workspace
               </Button>
@@ -54,7 +54,7 @@ export function HeroSection({user}: AuthProps) {
               <Link href={`${authUrl}`}>
                 <Button 
                 size="lg"
-                className="bg-black hover:bg-black/80 hover:cursor-pointer text-white px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
+                className="bg-black dark:bg-purple-500 hover:bg-black/80 dark:hover:bg-purple-600 hover:cursor-pointer text-white dark:text-black px-8 py-6 rounded-lg text-base sm:text-lg font-medium transition-colors duration-100 click:bg-black/80 click:scale-95 click:duration-75"
               >
                 Get Started
               </Button>
@@ -64,11 +64,11 @@ export function HeroSection({user}: AuthProps) {
 
           <span className='flex flex-col gap-4 sm:flex-row md:gap-4 justify-center'>
             <Link href="/demo">
-              <span className='text-black/90 text-sm underline underline-offset-1'>Live Demo</span>
+              <span className='text-black/90 dark:text-purple-200 text-sm underline underline-offset-1'>Live Demo</span>
             </Link>
 
             <Link href="/test">
-              <span className='text-black/90 text-sm underline underline-offset-1'>test an API endpoint</span>
+              <span className='text-black/90 dark:text-purple-200 text-sm underline underline-offset-1'>test an API endpoint</span>
             </Link>
         </span>
         </div>

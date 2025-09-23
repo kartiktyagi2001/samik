@@ -11,12 +11,12 @@ export function Footer() {
   const date = new Date();
 
   return (
-    <footer className='bg-gray-50 px-4 py-2'>
+    <footer className='bg-gray-50 dark:bg-transparent px-4 py-2'>
       <div className='flex  gap-3 justify-between items-center'>
         <div>
-          <span className='text-gray-700 text-xs'>Engineered by </span>
-          <Link href="https://kartiktyagi.vercel.app" target='_blank' className='text-sm text-gray-700'>
-            <span className='underline hover:transition-transform duration-200 hover:scale-102 text-black text-xs'>
+          <span className='text-gray-700 dark:text-gray-600 text-xs'>Engineered by </span>
+          <Link href="https://kartiktyagi.vercel.app" target='_blank'>
+            <span className='underline hover:transition-transform duration-200 hover:scale-102 text-black dark:text-gray-400 text-xs'>
               Kartik Tyagi
             </span>
           </Link>
@@ -27,11 +27,11 @@ export function Footer() {
 
           <span className='text-gray-700 text-xs'>|</span> */}
 
-          <span className='text-gray-700 text-xs'>
+          <span className='text-gray-700 dark:text-gray-600 text-xs'>
                 {format(date, 'MMM d, yyyy')}
             </span>
 
-            <span className='text-gray-700 text-xs'>|</span>
+            <span className='text-gray-700 dark:text-gray-600 text-xs'>|</span>
 
             <span className="relative flex h-3 w-3">
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
