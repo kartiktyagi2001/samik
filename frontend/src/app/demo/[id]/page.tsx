@@ -283,7 +283,7 @@ export default function GroupDetailsPage() {
         <Button
           onClick={handleDeleteGroup}
           className="bg-red-600 text-white hover:bg-red-700"
-          
+          disabled
         >
           Delete Group
         </Button>
