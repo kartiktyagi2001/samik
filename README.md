@@ -1,7 +1,7 @@
-# DataForge: Unified API Aggregation Layer
+# Samik: Unified API Aggregation Layer
 
 ## 🚀 Overview
-**DataForge** aggregates multiple APIs into a single normalized endpoint, simplifying integration by unifying varied responses and providing detailed metadata.
+**Samik** aggregates multiple APIs into a single normalized endpoint, simplifying integration by unifying varied responses and providing detailed metadata.
 
 ## ✨ Features
 - ⚡ Aggregates data concurrently from multiple APIs  
