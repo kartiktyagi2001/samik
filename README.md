@@ -1,5 +1,7 @@
 # Samik: Unified API Aggregation Layer
 
+Don't forget to give us a star ⭐
+
 ## 🚀 Overview
 **Samik** aggregates multiple APIs into a single normalized endpoint, simplifying integration by unifying varied responses and providing detailed metadata.
 
